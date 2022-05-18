@@ -2,7 +2,7 @@
 
 ## **To Do List**
 
-- [ ] Choosing 20 Class no Classify with CNN 
+- [X] Choosing 20 Class for Mother food and 20 Class for Baby Food to Classify with CNN 
 - [ ] Scrapping the image from google images @100 images 
 - [X] Scrapping panganku dataset nutrient 
 - [ ] Scrapping recipe from cookpad etc. @100 recipe

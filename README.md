@@ -9,6 +9,8 @@
 - [ ] Cleaning Dataset
 - [ ] Testing Train 20 Class in Standard Colab with Transfer Learning using VGG-16 or VGG-32 or AlexNet
 - [X] Testing Object Measurement using AruCo
+- [ ] Convert Measurement to TS code in backend
+
 
 ## **References**
 

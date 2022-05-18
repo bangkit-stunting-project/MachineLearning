@@ -1,21 +1,21 @@
 Makanan Ibu
-- Siomay
+- Kalio Ayam
 - Ketoprak
-- Mi Ayam
-- Bakso 
+- Mie Ayam
+- Mie Bakso 
 - Bubur Ayam
-- Ayam Goreng Kentucky
+- Beef Teriyaki
 - Martabak Mesir
 - Mie Pangsit Basah
-- Bubur Kacang Hijau
+- Beef Burger
 - Soto Padang
 - Mie Aceh Rebus
-- Nasi Rendang
-- Nasi Ayam Goreng 
-- Nasi Ayam Taliwang 
-- Nasi Ayam Teriyaki 
-- Nasi Ikan Sarden 
-- Nasi Gulai Ikan 
+- Rendang Sapi
+- Soto Betawi
+- Ayam Taliwang 
+- Chicken Teriyaki 
+- Pempek Telur
+- Sop Daging Sapi
 - Karedok
 - Gado-Gado
 - Nasi Rames

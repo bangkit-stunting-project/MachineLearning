@@ -6,6 +6,9 @@ import os
 from PIL import Image
 import io
 import hashlib
+
+from selenium.webdriver.common.by import By
+
 # This is the path I use
 #DRIVER_PATH = '/Users/anand/Desktop/chromedriver'
 # Put the path for your ChromeDriver here
@@ -30,7 +33,7 @@ def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_betw
         scroll_to_end(wd)
 
         # get all image thumbnail results
-        thumbnail_results = wd.find_elements_by_css_selector("img.Q4LuWd")
+        thumbnail_results = wd.find_elements(by=By.CSS_SELECTOR, value="img.Q4LuWd")
         number_results = len(thumbnail_results)
         
         print(f"Found: {number_results} search results. Extracting links from {results_start}:{number_results}")
@@ -44,21 +47,21 @@ def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_betw
                 continue
 
             # extract image urls    
-            actual_images = wd.find_elements_by_css_selector('img.n3VNCb')
+            actual_images = wd.find_elements(by=By.CSS_SELECTOR, value='img.n3VNCb')
             for actual_image in actual_images:
                 if actual_image.get_attribute('src') and 'http' in actual_image.get_attribute('src'):
                     image_urls.add(actual_image.get_attribute('src'))
 
             image_count = len(image_urls)
 
-            if len(image_urls) >= max_links_to_fetch:
-                print(f"Found: {len(image_urls)} image links, done!")
-                break
+        if len(image_urls) >= max_links_to_fetch:
+            print(f"Found: {len(image_urls)} image links, done!")
+            break
         else:
             print("Found:", len(image_urls), "image links, looking for more ...")
             time.sleep(30)
             return
-            load_more_button = wd.find_element_by_css_selector(".mye4qd")
+            load_more_button = wd.find_element_by_class_name(".mye4qd")
             if load_more_button:
                 wd.execute_script("document.querySelector('.mye4qd').click();")
 
@@ -91,14 +94,15 @@ def persist_image(folder_path:str,file_name:str,url:str):
 
 if __name__ == '__main__':
     wd = webdriver.Firefox(executable_path=DRIVER_PATH)
-    queries = ['Nasi Rames', 'Kalio Ayam', 'Beef Burger', 'Rendang Sapi', 'Pempek Telur', 'SOp Daging Sapi', 'Soto Betawi']  #change your set of querries here
+    # 'Kalio Ayam', 'Ketoprak', 'Mie Ayam', 'Mie Bakso' , 'Bubur Ayam', 'Beef Teriyaki', 
+    queries = [ 'Martabak Mesir', 'Mie Pangsit Basah', 'Beef Burger', 'Soto Padang', 'Mie Aceh Rebus', 'Rendang Sapi', 'Soto Betawi', 'Ayam Taliwang', 'Chicken Teriyaki', 'Pempek Telur', 'Sop Daging Sapi', 'Karedok', 'Gado-Gado', 'Nasi Rames' ]  #change your set of querries here
     for query in queries:
         wd.get('https://google.com')
-        search_box = wd.find_element_by_css_selector('input.gLFyf')
+        search_box = wd.find_element(by=By.CSS_SELECTOR, value='input.gLFyf')
         search_box.send_keys(query)
-        links = fetch_image_urls(query, 100 ,wd)
+        links = fetch_image_urls(query, 150 ,wd)
         #images_path = '/Users/anand/Desktop/contri/images'  #enter your desired image path
-        images_path = './downloads/'
+        images_path = './dataset-makanan-ibu'
         for i in links:
             persist_image(images_path,query,i)
     wd.quit()

@@ -11,7 +11,7 @@ aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_5X5_50)
 detector = HomogeneousBgDetector()
 
 # Load Image
-img = cv2.imread("testing4.jpg")
+img = cv2.imread("./real-testing2.jpeg")
 
 # Get Aruco marker
 corners, _, _ = cv2.aruco.detectMarkers(img, aruco_dict, parameters=parameters)
@@ -49,6 +49,6 @@ for cnt in contours:
 
 
 
-cv2.imshow("Image", img)
-cv2.waitKey(0)
-cv2.imwrite("./result/testing4.jpg", img)
+# cv2.imshow("Image", img)
+# cv2.waitKey(0)
+cv2.imwrite("./result/realtesting2.jpg", img)

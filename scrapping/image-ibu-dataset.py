@@ -60,16 +60,16 @@ def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_betw
         else:
             print("Found:", len(image_urls), "image links, looking for more ...")
             time.sleep(30)
-            parent_load_more_button = wd.find_element_by_class_name('YstHxe')
             status = parent_load_more_button.get_attribute('style')
 
             # return
             load_more_button = wd.find_elements(by=By.CLASS_NAME, value='mye4qd')
             if load_more_button:
                 wd.execute_script("document.querySelector('.mye4qd').click();")
-            if len(image_urls) >= 1000 and status != '' :
-                print("No more Image")
-                return image_urls
+                parent_load_more_button = wd.find_element_by_class_name('YstHxe')
+                if status != '' :
+                    print("No more Image")
+                    return image_urls
 
         # move the result startpoint further down
         results_start = len(thumbnail_results)
@@ -101,7 +101,8 @@ def persist_image(folder_path:str,file_name:str,url:str):
 if __name__ == '__main__':
     wd = webdriver.Firefox(executable_path=DRIVER_PATH)
     # 'Kalio Ayam', 'Ketoprak', 'Mie Ayam', 'Mie Bakso' , 'Bubur Ayam', 'Beef Teriyaki', 
-    queries = [ 'Bebek Goreng', 'Ayam Taliwang', 'Mie Ayam', 'Martabak Mesir', 'Soto Padang', 'Rendang Sapi', 'Sayur Asem', 'Pindang Kenari', 'Sate Bandeng', 'Belut Goreng' ]  #change your set of querries here
+    queries = ['Ayam Taliwang', 'Mie Ayam', 'Martabak Mesir', 'Soto Padang',] 
+    # 'Rendang Sapi', 'Sayur Asem', 'Pindang Kenari', 'Sate Bandeng', 'Belut Goreng' ]  #change your set of querries here
     for query in queries:
         wd.get('https://google.com')
         search_box = wd.find_element(by=By.CSS_SELECTOR, value='input.gLFyf')

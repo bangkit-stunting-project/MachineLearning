@@ -37,10 +37,6 @@ def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_betw
         
         thumbnail_results = wd.find_elements(by=By.CSS_SELECTOR, value="img.Q4LuWd")
         number_results = len(thumbnail_results)
-        if number_results == last_number_result : 
-            print('no Incerment')
-            break
-        last_number_result = number_results
         print(f"Found: {number_results} search results. Extracting links from {results_start}:{number_results}")
         
         last_img = thumbnail_results[-1]
@@ -58,10 +54,11 @@ def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_betw
             last_link = ''
             for actual_image in actual_images:
                 if actual_image.get_attribute('src') and 'http' in actual_image.get_attribute('src'):
-                    link = actual_image.get_attribute('src')
+                    # link = actual_image.get_attribute('src')
                     image_urls.add(actual_image.get_attribute('src'))
 
             image_count = len(image_urls)
+
 
         if len(image_urls) >= max_links_to_fetch:
             print(f"Found: {len(image_urls)} image links, done!")
@@ -77,15 +74,19 @@ def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_betw
             load_more_button = wd.find_elements(by=By.CLASS_NAME, value='mye4qd')
             if load_more_button:
                 wd.execute_script("document.querySelector('.mye4qd').click();")
-                print(wd.execute_script("document.querySelector('.mye4qd').click();"))
+                # print(wd.execute_script("document.querySelector('.mye4qd').click();"))
             else : 
-                print('Ne Image Left.')
+                print('No Image Left.')
                 return image_urls
                 # parent_load_more_button = wd.find_element_by_class_name('YstHxe')
                 # status = parent_load_more_button.get_attribute('style')
                 # if status == 'display: none;' :
                 #     print("No more Image")
                 #     return image_urls
+            if number_results == last_number_result : 
+                print('Stop at ' + str(last_number_result) + ' No Increment')
+                break
+            last_number_result = number_results
 
         # move the result startpoint further down
         results_start = len(thumbnail_results)
@@ -93,6 +94,7 @@ def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_betw
     return image_urls
 
 def persist_image(folder_path:str,file_name:str,url:str):
+
     try:
         image_content = requests.get(url).content
 
@@ -126,6 +128,8 @@ if __name__ == '__main__':
         links = fetch_image_urls(query, 1200 ,wd)
         #images_path = '/Users/anand/Desktop/contri/images'  #enter your desired image path
         images_path = './dataset-makanan-ibu-1000/'
+        print(query + '-' + len(links))
         for i in links:
             persist_image(images_path,query,i)
+        print ('Saved ' + len(links) +'model')
     wd.quit()

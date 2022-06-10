@@ -14,7 +14,7 @@ from selenium.webdriver.common.by import By
 DRIVER_PATH = '../driver/geckodriver'
 
 driver = webdriver.Firefox(executable_path=DRIVER_PATH)
-queries = ['Bebek Goreng', 'Mie Ayam', 'Martabak Mesir', 'Soto Padang',] 
+queries = ['Soto Padang',] 
 
 for query in queries : 
     driver.get('https://google.com')
@@ -22,13 +22,14 @@ for query in queries :
     search_box.send_keys(query)
 
     link = []
-    max_scrapping_data = 1500
+    max_scrapping_data = 1300
 
     search_url = "https://www.google.com/search?safe=off&site=&tbm=isch&source=hp&q={q}&oq={q}&gs_l=img"
     driver.get(search_url.format(q=query))
 
     image_count = 0
     result_start = 0
+    last_len = len(link)
 
     while image_count < max_scrapping_data : 
         load_button_style = driver.find_element(by=By.CLASS_NAME, value='YstHxe').get_attribute('style')
@@ -60,7 +61,9 @@ for query in queries :
         
         if len(link) >= max_scrapping_data : 
             print (f'Ketemu {len(link)} link, Selesai')
-            break 
+            if last_len == len(link) : 
+                break
+            else : break 
         else : 
             print(f'Ketemu {len(link)}, sisa {max_scrapping_data-len(link)} data lagi')
             time.sleep(20)
@@ -69,6 +72,7 @@ for query in queries :
             if load_more_btn : 
                 driver.execute_script("document.querySelector('.mye4qd').click();")
             
+        last_len = len(link)
         result_start = len(thumbnail_result)
 
     saved_path = './dataset-makanan-ibu-1000'

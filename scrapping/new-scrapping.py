@@ -14,7 +14,7 @@ from selenium.webdriver.common.by import By
 DRIVER_PATH = '../driver/geckodriver'
 
 driver = webdriver.Firefox(executable_path=DRIVER_PATH)
-queries = ['Soto Padang',] 
+queries = ['Abon Ikan', 'Tekwan'] 
 
 for query in queries : 
     driver.get('https://google.com')
@@ -22,7 +22,7 @@ for query in queries :
     search_box.send_keys(query)
 
     link = []
-    max_scrapping_data = 1300
+    max_scrapping_data = 1200
 
     search_url = "https://www.google.com/search?safe=off&site=&tbm=isch&source=hp&q={q}&oq={q}&gs_l=img"
     driver.get(search_url.format(q=query))
@@ -33,10 +33,12 @@ for query in queries :
 
     while image_count < max_scrapping_data : 
         load_button_style = driver.find_element(by=By.CLASS_NAME, value='YstHxe').get_attribute('style')
-        print(load_button_style)
         # while load_button_style == 'display: none;':
-        driver.execute_script('window.scrollTo(0, document.body.scrollHeight)')
-        time.sleep(1)
+            # load_button_style = driver.find_element(by=By.CLASS_NAME, value='YstHxe').get_attribute('style')
+            # print(load_button_style)
+        for i in range(5) : 
+            driver.execute_script('window.scrollTo(0, document.body.scrollHeight)')
+            time.sleep(1)
             # if load_button_style == "" : 
                 # break
 

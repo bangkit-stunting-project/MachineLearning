@@ -2,8 +2,8 @@ import DuckDuckGoImages as ddg
 import os 
 
 max_urls = 1500
-path = './dataset-ibu-duckduckGo/'
-class_list = ['Rendang Sapi', 'Pempek Telur', 'Beef Burger', 'Sop Buntut']
+path = 'C:\MachineLearning\dataset\image-dataset\dataset-makanan-ibu-10000-daffa'
+class_list = ['Ayam Goreng Kentucky Paha', 'Plecing Kangkung', 'Abon Sapi', 'Teri Balado', 'Gurame Asam Manis']
 
 for i in class_list : 
     data_path = os.path.join(path, i) 

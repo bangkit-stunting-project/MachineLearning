@@ -11,10 +11,10 @@ import hashlib
 
 from selenium.webdriver.common.by import By 
 
-DRIVER_PATH = '../driver/geckodriver'
+DRIVER_PATH = 'C:\Program Files (x86)\geckodriver'
 
 driver = webdriver.Firefox(executable_path=DRIVER_PATH)
-queries = ['Abon Ikan', 'Tekwan'] 
+queries = ['Bebek Goreng', 'Beef Burger', 'Cumi Cumi Goreng', 'Gulai Kambing', 'Gurame Asem Manis', 'Mie Ayam', 'Pelecing Kangung', 'Rendang Sapi', 'Sayur Asem', 'Semur Jengkol', 'Sop Buntut', 'Soto Padang', 'Tekwan'] 
 
 for query in queries : 
     driver.get('https://google.com')
@@ -22,7 +22,7 @@ for query in queries :
     search_box.send_keys(query)
 
     link = []
-    max_scrapping_data = 1200
+    max_scrapping_data = 100
 
     search_url = "https://www.google.com/search?safe=off&site=&tbm=isch&source=hp&q={q}&oq={q}&gs_l=img"
     driver.get(search_url.format(q=query))
@@ -77,7 +77,7 @@ for query in queries :
         last_len = len(link)
         result_start = len(thumbnail_result)
 
-    saved_path = './dataset-makanan-ibu-1000'
+    saved_path = 'C:\MachineLearning\new-scrapping'
     for i, url in enumerate(link) : 
         try : 
             image_content = requests.get(url).content
